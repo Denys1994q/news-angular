@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "news-app": {
+    "angular-rozetka": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/news-app",
+            "outputPath": "dist/angular-rozetka",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -30,8 +30,13 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.sass"
+              "src/styles/styles.sass"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/styles"
+              ]
+            },
             "scripts": []
           },
           "configurations": {
@@ -65,10 +70,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "news-app:build:production"
+              "browserTarget": "angular-rozetka:build:production"
             },
             "development": {
-              "browserTarget": "news-app:build:development"
+              "browserTarget": "angular-rozetka:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -76,7 +81,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "news-app:build"
+            "browserTarget": "angular-rozetka:build"
           }
         },
         "test": {
@@ -93,7 +98,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.sass"
+              "src/styles/styles.sass"
             ],
             "scripts": []
           }
