@@ -1,0 +1,28 @@
+<label htmlFor="filter-input" className="searchInput__label">
+  Filter by keywords
+</label>
+<div class="searchInput__inputWrapper">
+  <img
+    src="../../../../../assets/filter-icon.png"
+    class="searchInput__icon"
+    alt="filter-icon"
+  />
+  <div class="searchInput__input">
+      <input
+        class="inputForSearch"
+        matInput
+        placeholder="The most successful IT companies in 2020"
+        type="text"
+        [(ngModel)]="searchInpValue"
+      />
+      <button
+        *ngIf="searchInpValue"
+        class="searchBtn"
+        mat-icon-button
+        aria-label="Clear"
+        (click)="searchInpValue = ''"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+  </div>
+</div>
