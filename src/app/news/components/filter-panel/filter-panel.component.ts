@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-    selector: 'app-news-page', 
-    templateUrl: './news-page.component.html', 
-    styleUrls: ['./news-page.component.sass'], 
+    selector: 'app-filter-panel', 
+    templateUrl: './filter-panel.component.html', 
+    styleUrls: ['./filter-panel.component.sass'], 
 })
 
-export class NewsPageComponent implements OnInit {
+export class FilterPanelComponent implements OnInit {
     // Змінні, властивості, методи і логіка компонента
     // ...
   
