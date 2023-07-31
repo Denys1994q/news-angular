@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
     selector: 'app-filter-panel', 
@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class FilterPanelComponent implements OnInit {
+  @Input() result: number = 0
     // Змінні, властивості, методи і логіка компонента
     // ...
   

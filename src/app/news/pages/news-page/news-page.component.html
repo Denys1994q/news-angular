@@ -1,8 +1,18 @@
 <div>
-  <app-filter-panel></app-filter-panel>
+  <app-filter-panel [result]="length"></app-filter-panel>
+  <!-- Завантаження -->
+  <div *ngIf="loading$ | async">
+    <mat-progress-spinner
+      mode="indeterminate"
+      diameter="40"
+    ></mat-progress-spinner>
+  </div>
+  <!-- Помилка -->
+  <div *ngIf="error$ | async as error">Sorry, something is wrong...</div>
+  <!-- Основний контент -->
   <ul class="cards">
-    <li><a href=""><app-card></app-card></a></li>
-    <li><app-card></app-card></li>
-    <li><app-card></app-card></li>
+    <li class="cards__item" *ngFor="let newsItem of filteredNews$ | async ">
+      <a href=""><app-card [data]="newsItem"></app-card></a>
+    </li>
   </ul>
 </div>

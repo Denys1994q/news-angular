@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { OneNews } from 'src/app/news/news.reducer';
+
 
 @Component({
   selector: 'app-card',
@@ -6,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./card.component.sass']
 })
 export class CardComponent {
- 
+ @Input() data!: OneNews
 }
