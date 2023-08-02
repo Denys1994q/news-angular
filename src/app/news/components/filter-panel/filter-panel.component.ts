@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
     selector: 'app-filter-panel', 
@@ -8,15 +8,16 @@ import { Component, OnInit, Input } from '@angular/core';
 
 export class FilterPanelComponent implements OnInit {
   @Input() result: number = 0
-    // Змінні, властивості, методи і логіка компонента
-    // ...
+  @Output() FilterPanelChange: EventEmitter<string> = new EventEmitter<string>();
+ 
+  constructor() {}
   
-    constructor() {}
-  
-    ngOnInit(): void {
-      // Логіка, що виконується при ініціалізації компонента
+    ngOnInit(): void {      
     }
-  
-    // Інші методи компонента, якщо необхідно
-    // ...
+
+    onSearchInputChange(inpValue: string) {
+      this.FilterPanelChange.emit(inpValue)
+    }
+
+
   }

@@ -8,10 +8,24 @@
   <mat-card-content class="card__content">
     <div class="card__dateWrapper">
       <mat-icon class="date-icon">date_range</mat-icon>
-      <p class="card__date">{{ data.published_at | date:'MMMM d, yyyy'  }}</p>
+      <p class="card__date">{{ data.published_at | date : "MMMM d, yyyy" }}</p>
     </div>
-    <mat-card-title class="card__title">{{ data.title }} </mat-card-title>
-    <p class="card__text">{{ data.summary }}</p>
+    <mat-card-title class="card__title">
+      <span
+        *ngFor="let word of data.title.split(' ')"
+        [ngClass]="{ highlight: highlightWord(word) }"
+      >
+        {{ word + "&nbsp;" }}
+      </span>
+    </mat-card-title>
+    <p class="card__text">
+      <span
+        *ngFor="let word of data.summary.split(' ')"
+        [ngClass]="{ highlight: highlightWord(word) }"
+      >
+        {{ word + "&nbsp;" }}
+      </span>
+    </p>
     <mat-card-actions>
       <button mat-button class="readMoreBtn">Read more</button>
       <mat-icon>arrow_right_alt</mat-icon>

@@ -1,5 +1,5 @@
 <div>
-  <app-filter-panel [result]="length"></app-filter-panel>
+  <app-filter-panel [result]="length" (FilterPanelChange)="onFilterPanelChange($event)"></app-filter-panel>
   <!-- Завантаження -->
   <div *ngIf="loading$ | async">
     <mat-progress-spinner
@@ -12,7 +12,7 @@
   <!-- Основний контент -->
   <ul class="cards">
     <li class="cards__item" *ngFor="let newsItem of filteredNews$ | async ">
-      <a href=""><app-card [data]="newsItem"></app-card></a>
+      <a href=""><app-card [data]="newsItem" [keyword]='keyword'></app-card></a>
     </li>
   </ul>
 </div>

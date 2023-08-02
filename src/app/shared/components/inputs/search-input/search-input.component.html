@@ -11,16 +11,17 @@
       <input
         class="inputForSearch"
         matInput
-        placeholder="The most successful IT companies in 2020"
+        autofocus 
         type="text"
         [(ngModel)]="searchInpValue"
+        (input)="emitData()"
       />
       <button
         *ngIf="searchInpValue"
         class="searchBtn"
         mat-icon-button
         aria-label="Clear"
-        (click)="searchInpValue = ''"
+        (click)="resetValue()"
       >
         <mat-icon>close</mat-icon>
       </button>

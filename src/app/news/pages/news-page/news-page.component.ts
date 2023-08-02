@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { NewsState } from '../../news.reducer';
 import { filterNews, loadNews } from '../../news.actions';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 
 interface StoreTypes {
   news: NewsState
@@ -14,11 +15,13 @@ interface StoreTypes {
     styleUrls: ['./news-page.component.sass'], 
 })
 export class NewsPageComponent implements OnInit {
-    // newsItems$!: Observable<any[]>;
     filteredNews$!: Observable<any[]>;
     loading$!: Observable<any>;
     error$!: Observable<any>;
     length!: any
+    keyword: string = ''
+    private searchSubject = new Subject<string>();
+    private debounceTimeMs = 300; 
 
     constructor(private store: Store<StoreTypes>) {}
   
@@ -33,22 +36,25 @@ export class NewsPageComponent implements OnInit {
       this.store.select((state) => state.news.newsAll).subscribe((news) => {
         // якщо список новин із серверу успішно отримано, записуємо початково ці новини у список відфільтрованих, які й показуються юзеру
         if (news.length > 0) {
-          this.store.dispatch(filterNews({ keyword: 'untry' })); // Диспатчимо фільтрацію після успішного завантаження новин
+          this.store.dispatch(filterNews({ keyword: '' })); 
         }
       });
-
+      // список відфільтрованих новин
       this.filteredNews$ = this.store.select((state: StoreTypes) => state.news.filteredNews)
-      
-      // this.filteredNews$.subscribe((newsItems) => {
-      //   this.length = newsItems.length; 
-      //   this.store.dispatch(filterNews({keyword: 'dsa'}));
-      // });
+      this.filteredNews$.subscribe((newsItems) => {
+        this.length = newsItems.length; 
+      });
 
-      // this.newsItems$ = this.store.select((state: StoreTypes) => state.news.newsAll)
+      this.searchSubject.pipe(
+        debounceTime(this.debounceTimeMs),
+        distinctUntilChanged()
+      ).subscribe((keyword) => {
+        this.store.dispatch(filterNews({ keyword: keyword }));
+      });
+    }
 
-      // this.newsItems$.subscribe((newsItems) => {
-        // this.length = newsItems.length; 
-        // this.store.dispatch(filterNews({keyword: 'dsa'}));
-      // });
+    onFilterPanelChange(inpValue: string) {
+      this.keyword = inpValue
+      this.searchSubject.next(inpValue);
     }
 }
