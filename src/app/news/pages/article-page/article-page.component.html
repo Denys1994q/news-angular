@@ -1,3 +1,19 @@
-<div>
-    123
+<div *ngIf="loading$ | async">
+  <mat-progress-spinner
+    mode="indeterminate"
+    diameter="40"
+  ></mat-progress-spinner>
 </div>
+<div *ngIf="error$ | async as error">Sorry, something is wrong...</div>
+<div *ngIf="article$ | async as article">
+  <img
+    src="{{ article.image_url }}"
+    class="img-for-article"
+    alt="article-background-image"
+  />
+  <div class="article">
+    <h1 class="article__title">{{ article.title }}</h1>
+    <p class="article__text">{{ article.summary }}</p>
+  </div>
+</div>
+<app-nav-btn [text]="'Back to homepage'" [linkTo]="'/'"></app-nav-btn>

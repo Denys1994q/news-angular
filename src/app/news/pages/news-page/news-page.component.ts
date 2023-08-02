@@ -5,7 +5,7 @@ import { NewsState } from '../../news.reducer';
 import { filterNews, loadNews } from '../../news.actions';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 
-interface StoreTypes {
+export interface StoreTypes {
   news: NewsState
 }
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { mergeMap, map, catchError } from 'rxjs/operators';
+import { mergeMap, map, concatMap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { NewsService } from './news.service';
 import * as NewsActions from './news.actions';
@@ -18,6 +18,19 @@ export class NewsEffects {
       )
     )
   );
+
+  loadArticle$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(NewsActions.loadArticle),
+    concatMap((action) =>
+      this.newsService.getArticle(action.articleId).pipe(
+        map((article) => NewsActions.loadArticleSuccess({ article })),
+        catchError((error) => of(NewsActions.loadArticleFailure({ error })))
+      )
+    )
+  )
+);
+
 
   constructor(private actions$: Actions, private newsService: NewsService) {}
 }

@@ -8,6 +8,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {CardComponent} from './components/card/card.component'
+import { NavBtnComponent } from './components/btns/nav-btn/nav-btn.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DatePipe } from '@angular/common';
@@ -18,7 +19,8 @@ import { DatePipe } from '@angular/common';
 @NgModule({
   declarations: [
     SearchInputComponent,
-    CardComponent
+    CardComponent,
+    NavBtnComponent
   ],
   imports: [
     CommonModule, 
@@ -43,7 +45,8 @@ import { DatePipe } from '@angular/common';
     FormsModule,
     SearchInputComponent,
     MatProgressSpinnerModule,
-    CardComponent
+    CardComponent,
+    NavBtnComponent
   ]
 })
 export class SharedModule { }

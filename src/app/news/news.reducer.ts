@@ -21,13 +21,15 @@ export interface NewsState {
   loading: boolean;
   error: any;
   filteredNews: OneNews[],
+  article: any
 }
 
 export const initialState: NewsState = {
   newsAll: [],
   loading: false,
   error: null,
-  filteredNews: []
+  filteredNews: [],
+  article: null
 };
 
 export const newsReducer = createReducer(
@@ -55,6 +57,9 @@ export const newsReducer = createReducer(
       }
     })
   })),
+  on(NewsActions.loadArticle, (state) => ({ ...state, loading: true, error: null })),
+  on(NewsActions.loadArticleSuccess, (state, { article }) => ({ ...state, article: article, loading: false })),
+  on(NewsActions.loadArticleFailure, (state, { error }) => ({ ...state, error, loading: false })),
 );
 
 
