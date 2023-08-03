@@ -6,13 +6,11 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class NewsService {
-  private apiUrl = 'https://api.spaceflightnewsapi.net/v4/articles/?limit=10&offset=10';
- 
-
   constructor(private http: HttpClient) {}
 
-  getNews(): Observable<any[]> {
-    return this.http.get<any>(this.apiUrl);
+  getNews(offset: number): Observable<any[]> {
+    const apiUrl = `https://api.spaceflightnewsapi.net/v4/articles/?limit=10&offset=${offset}`;
+    return this.http.get<any>(apiUrl);
   }
 
   getArticle(id: any): Observable<any[]> {

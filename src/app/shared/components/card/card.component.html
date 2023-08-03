@@ -12,7 +12,7 @@
     </div>
     <mat-card-title class="card__title">
       <span
-        *ngFor="let word of data.title.split(' ')"
+        *ngFor="let word of truncateWord(data.title, 100, data.id).split(' ')"
         [ngClass]="{ highlight: highlightWord(word) }"
       >
         {{ word + "&nbsp;" }}
@@ -20,8 +20,8 @@
     </mat-card-title>
     <p class="card__text">
       <span
-        *ngFor="let word of data.summary.split(' ')"
-        [ngClass]="{ highlight: highlightWord(word) }"
+        *ngFor="let word of truncateWord(data.summary, 100, data.id).split(' ')"
+        [ngClass]="{ highlight: highlightWord(word, data.id) }"
       >
         {{ word + "&nbsp;" }}
       </span>
