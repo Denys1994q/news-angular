@@ -22,12 +22,10 @@
     &__input
         width: 60rem
         position: relative
-        input
-            // width: 60rem
-        //     @include respond(phoneXL)
-        //         width: 80%
-        //     @include respond(phoneL)
-        //         width: 100%
+        @include respond(phoneXL)
+            width: 80%
+        @include respond(phoneL)
+            width: 100%
 .inputForSearch
     font-size: 1.6rem,
     padding-left: 6rem,
@@ -36,7 +34,7 @@
     box-shadow: 0px 8px 4px rgba(0, 0, 0, 0.05),
     border-radius: 5px,
     height: 5rem
-    width: 60rem
+    width: 100%
 .searchBtn
     position: absolute
     top: 50%

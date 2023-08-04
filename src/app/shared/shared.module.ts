@@ -13,9 +13,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DatePipe } from '@angular/common';
 
-// import { NewsEffects } from './news.effects';
-// import { newsReducer } from './news.reducer';
-
 @NgModule({
   declarations: [
     SearchInputComponent,

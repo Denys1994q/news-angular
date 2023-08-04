@@ -3,8 +3,7 @@
     mat-card-image
     class="card__image"
     src="{{ data.image_url }}"
-    alt="news-card-image"
-  />
+    alt="news-card-image" />
   <mat-card-content class="card__content">
     <div class="card__dateWrapper">
       <mat-icon class="date-icon">date_range</mat-icon>
@@ -13,17 +12,15 @@
     <mat-card-title class="card__title">
       <span
         *ngFor="let word of truncateWord(data.title, 100, data.id).split(' ')"
-        [ngClass]="{ highlight: highlightWord(word) }"
-      >
-        {{ word + "&nbsp;" }}
+        [ngClass]="{ highlight: highlightWord(word) }" >
+          {{ word + "&nbsp;" }}
       </span>
     </mat-card-title>
     <p class="card__text">
       <span
         *ngFor="let word of truncateWord(data.summary, 100, data.id).split(' ')"
-        [ngClass]="{ highlight: highlightWord(word, data.id) }"
-      >
-        {{ word + "&nbsp;" }}
+        [ngClass]="{ highlight: highlightWord(word, data.id) }">
+          {{ word + "&nbsp;" }}
       </span>
     </p>
     <mat-card-actions>

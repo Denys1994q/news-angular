@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-nav-btn',
@@ -6,6 +6,6 @@ import { Component, EventEmitter, Output, Input } from '@angular/core';
   styleUrls: ['./nav-btn.component.sass']
 })
 export class NavBtnComponent {
-    @Input() text: string = ''
-    @Input() linkTo!: string
+  @Input() text: string = ''
+  @Input() linkTo!: string
 }

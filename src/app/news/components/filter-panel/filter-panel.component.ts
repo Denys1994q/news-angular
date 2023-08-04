@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
     selector: 'app-filter-panel', 
@@ -6,18 +6,12 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
     styleUrls: ['./filter-panel.component.sass'], 
 })
 
-export class FilterPanelComponent implements OnInit {
+export class FilterPanelComponent {
   @Input() result: number = 0
   @Output() FilterPanelChange: EventEmitter<string> = new EventEmitter<string>();
  
-  constructor() {}
-  
-    ngOnInit(): void {      
-    }
-
-    onSearchInputChange(inpValue: string) {
-      this.FilterPanelChange.emit(inpValue)
-    }
-
-
+  onSearchInputChange(inpValue: string) {
+    this.FilterPanelChange.emit(inpValue)
   }
+
+}

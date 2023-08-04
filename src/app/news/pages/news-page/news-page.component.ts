@@ -1,13 +1,10 @@
 import { Component, AfterViewInit, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
-import { NewsState } from '../../news.reducer';
+import { StoreTypes } from '../../news.reducer';
+import { Article } from '../../news.reducer';
 import { filterNews, loadNews } from '../../news.actions';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
-
-export interface StoreTypes {
-  news: NewsState
-}
 
 @Component({
     selector: 'app-news-page', 
@@ -16,12 +13,12 @@ export interface StoreTypes {
 })
 export class NewsPageComponent implements OnInit, AfterViewInit {
     // список новин, який показується у верстці 
-    filteredNews$!: Observable<any[]>;
+    filteredNews$!: Observable<Article[]>;
     // завантаження
-    loading$!: Observable<any>;
+    loading$!: Observable<boolean>;
     // помилка при завантаженні
     error$!: Observable<any>;
-    length!: any
+    length!: number
     // значення інпуту для пошуку
     keyword: string = ''
     // для штучної затримки при роботі інпута (оскільки працює на кожен символ)
@@ -41,7 +38,7 @@ export class NewsPageComponent implements OnInit, AfterViewInit {
           // завантажуємо додаткові новини, якщо юзер доскролив до останньої картки
           // при першому завантаженні сторінки не виконуємо зайвий loadNews, контролюємо через змінну firstTimeScroll
           // не завантажуємо додаткові новини при працюючій фільтрації
-          if (this.keyword.length > 0) {return}
+          if (this.keyword.length > 0) return
           this.store.dispatch(loadNews());
         }
         this.firstTimeScroll = false;
@@ -50,17 +47,20 @@ export class NewsPageComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit(): void {
-      // завантажуємо дані з серверу
-      this.store.dispatch(loadNews());
       // статус: завантаження
       this.loading$ = this.store.select((state: StoreTypes) => state.news.loading);
       // статус: помилка
       this.error$ = this.store.select((state: StoreTypes) => state.news.error);
       // підписуємо на зміни в списку всіх новин, які приходять з серверу - newsAll
       this.store.select((state) => state.news.newsAll).subscribe((news) => {
-        // якщо список новин із серверу успішно отримано, записуємо початково ці новини у список відфільтрованих, які й показуються юзеру
-        if (news.length > 0) {
-          this.store.dispatch(filterNews({ keyword: '' })); 
+        if (news.length === 0) {
+          // завантажуємо дані з серверу
+          this.store.dispatch(loadNews());
+        } else {
+          // якщо список новин із серверу успішно отримано, записуємо початково ці новини у список відфільтрованих, які й показуються юзеру
+          if (news.length > 0) {
+            this.store.dispatch(filterNews({ keyword: '' })); 
+          }
         }
       });
       // список відфільтрованих новин

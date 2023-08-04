@@ -1,23 +1,23 @@
 <div>
   <app-filter-panel
     [result]="length"
-    (FilterPanelChange)="onFilterPanelChange($event)"
-  ></app-filter-panel>
+    (FilterPanelChange)="onFilterPanelChange($event)">
+  </app-filter-panel>
   <!-- Завантаження -->
   <div *ngIf="loading$ | async">
     <mat-progress-spinner
       mode="indeterminate"
-      diameter="40"
-    ></mat-progress-spinner>
+      diameter="40">
+    </mat-progress-spinner>
   </div>
   <!-- Помилка -->
   <div *ngIf="error$ | async as error">Sorry, something is wrong...</div>
   <!-- Основний контент -->
   <ul #newsContainer class="cards">
     <li class="cards__item" *ngFor="let newsItem of filteredNews$ | async">
-      <a [routerLink]="['/', newsItem.id]"
-        ><app-card [data]="newsItem" [keyword]="keyword"></app-card
-      ></a>
+      <a [routerLink]="['/', newsItem.id]">
+        <app-card [data]="newsItem" [keyword]="keyword"></app-card>
+      </a>
     </li>
     <div #intersectionTrigger></div>
   </ul>

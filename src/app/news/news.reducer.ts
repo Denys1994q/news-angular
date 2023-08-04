@@ -1,9 +1,7 @@
-// news.reducer.ts
-
 import { createReducer, on } from '@ngrx/store';
 import * as NewsActions from './news.actions';
 
-export interface OneNews {
+export interface Article {
   featured: boolean;
   id: number;
   image_url: string;
@@ -17,12 +15,18 @@ export interface OneNews {
 }
 
 export interface NewsState {
-  newsAll: OneNews[];
+  newsAll: Article[];
   loading: boolean;
   error: any;
-  filteredNews: OneNews[],
-  article: any,
+  filteredNews: Article[],
+  article: Article | null,
+  articleLoading: boolean,
+  articleError: any,
   offset: number;
+}
+
+export interface StoreTypes {
+  news: NewsState
 }
 
 export const initialState: NewsState = {
@@ -31,7 +35,9 @@ export const initialState: NewsState = {
   loading: false,
   error: null,
   filteredNews: [],
-  article: null
+  article: null,
+  articleLoading: false,
+  articleError: null
 };
 
 export const newsReducer = createReducer(
@@ -47,11 +53,10 @@ export const newsReducer = createReducer(
   on(NewsActions.filterNews, (state, { keyword }) => ({
     ...state, 
     filteredNews: state.newsAll.filter((newsItem) => {
-      if (keyword === '') {return newsItem}
+      if (keyword === '') return newsItem
       // приводимо в нижній регістр, розділяємо на окремі слова по пробілу, зі слів забираємо все, крім цифр і літер
       const titleWords = newsItem.title.trim().toLowerCase().split(' ').map(word => {
         if (!/[a-zA-Z0-9]/.test(word)) return
-        // замінюємо & на пустий рядок і виходить, що завжди тру він
         return word.trim().replace(/[^a-z0-9]/ig, '')
       });
       const descriptionWords = newsItem.summary.trim().toLowerCase().trim().split(' ').map(word => {
@@ -63,17 +68,17 @@ export const newsReducer = createReducer(
     }).sort((a, b) => {
       const searchWords = keyword.trim().toLowerCase().split(' ').map(word => word.trim().replace(/[^a-z0-9]/ig, ''));
       const titleWords = a.title.trim().toLowerCase().split(' ').map(word => word.trim().replace(/[^a-z0-9]/ig, ''));
-      const a1Here = titleWords.some(titleWord => searchWords.includes(titleWord))
-      if (a1Here) {
+      // якщо знайдено співпадіння в заголовку, ставимо картку наперед
+      if ( titleWords.some(titleWord => searchWords.includes(titleWord))) {
         return -1
       } else {
         return 0
       }
     })
   })),
-  on(NewsActions.loadArticle, (state) => ({ ...state, loading: true, error: null })),
-  on(NewsActions.loadArticleSuccess, (state, { article }) => ({ ...state, article: article, loading: false })),
-  on(NewsActions.loadArticleFailure, (state, { error }) => ({ ...state, error, loading: false })),
+  on(NewsActions.loadArticle, (state) => ({ ...state, articleLoading: true, articleError: null })),
+  on(NewsActions.loadArticleSuccess, (state, { article }) => ({ ...state, article, articleLoading: false })),
+  on(NewsActions.loadArticleFailure, (state, { error }) => ({ ...state, articleError: error, articleLoading: false })),
 );
 
 

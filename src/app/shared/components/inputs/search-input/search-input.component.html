@@ -5,8 +5,7 @@
   <img
     src="../../../../../assets/filter-icon.png"
     class="searchInput__icon"
-    alt="filter-icon"
-  />
+    alt="filter-icon" />
   <div class="searchInput__input">
       <input
         class="inputForSearch"
@@ -14,15 +13,13 @@
         autofocus 
         type="text"
         [(ngModel)]="searchInpValue"
-        (input)="emitData()"
-      />
+        (input)="emitData()" />
       <button
         *ngIf="searchInpValue"
         class="searchBtn"
         mat-icon-button
         aria-label="Clear"
-        (click)="resetValue()"
-      >
+        (click)="resetValue()">
         <mat-icon>close</mat-icon>
       </button>
   </div>
